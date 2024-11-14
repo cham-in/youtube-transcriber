@@ -10,22 +10,20 @@ jobs:
     if: contains(github.event.issue.title, '[TRANSCRIBE]')
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+          cache: 'npm'
           
       - name: Install dependencies
-        run: npm ci
-        
+        run: |
+          npm install
+          
       - name: Process Video
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const script = require('./src/github-action.js')
-            await script.run()
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node src/github-action.js
