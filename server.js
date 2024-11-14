@@ -1,23 +1,28 @@
-npm install express axios
 const express = require('express');
 const axios = require('axios');
 const app = express();
 
-const clientId = 'Ov23liMg3L1ET7Aeu2ei';
-const clientSecret = 'd2b1c680766504099c794373c3d8a6ca818a45ab';
+app.use(express.json());
 
-app.get('/callback', async (req, res) => {
-    const requestToken = req.query.code;
-    const tokenResponse = await axios.post(`https://github.com/login/oauth/access_token`, {
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: requestToken
-    }, {
-        headers: { accept: 'application/json' }
-    });
+app.post('/create-issue', async (req, res) => {
+    const { url } = req.body;
+    const token = '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';
 
-    const accessToken = tokenResponse.data.access_token;
-    res.redirect(`/success?token=${accessToken}`);
+    try {
+        const response = await axios.post('https://api.github.com/repos/cham-in/youtube-transcriber/issues', {
+            title: `[TRANSCRIBE] New Video Request`,
+            body: url
+        }, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create issue' });
+    }
 });
 
 app.listen(3000, () => {
