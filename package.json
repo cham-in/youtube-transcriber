@@ -1,0 +1,20 @@
+{
+  "name": "youtube-transcriber",
+  "version": "1.0.0",
+  "description": "유튭-트랜스크리버",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cham-in/youtube-transcriber.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cham-in/youtube-transcriber/issues"
+  },
+  "homepage": "https://github.com/cham-in/youtube-transcriber#readme"
+}
